@@ -51,3 +51,24 @@ left_rotate(T, x)         // T: tree, z: new node
 
     left[y] = x    // y의 left node는 x가 된다.
     p[x] = y       // x의 paernt node는 y가 된다.
+
+// RB tree insert fixedup
+fixup(T, z)                             // T: tree, z: new node
+    while color[p[z]] == RED            // z의 parent node가 RED 라면
+        if p[z] == left[p[p[z]]]        // case: 1, 2, 3
+            then y = right[p[p[z]]]     // y: uncle node
+
+             if color[y] == RED             // case1: parent & uncle node가 RED, grand parent node가 BLACK
+                then color[p[z]] = BLACK    // parent node를 BLACK으로
+                color[y] = BLACK            // uncle node를 BLACK으로 변경
+                color[p[p[z]]] = RED        // grand parent node를 RED로 변경
+                z = p[p[z]]                 // z를 다시 갱신 후 while 시작
+            else if z == right[p[z]]        // case: 2, 3
+                then z = p[z]               // z의 부모를 z로 설정 (case 2)
+                left_rotate(T, z)           // z를 기준으로 left_rotate (case 2)
+                color[p[z]] = BLACK         // z의 parent node를 BLACK으로 설정(case 3)
+                color[p[p[z]]] = RED        // z의 grand parent node를 BLACK으로 설정(case 3)
+                right_rotate(T, p[p[z]])    // grand parent 기준으로 right_rotate
+            else case 4, 5, 6
+
+    color[root[T]] = BLACK

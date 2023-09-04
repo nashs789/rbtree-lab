@@ -5,7 +5,6 @@
 
 node_t *get_new_node(rbtree *tree, key_t key);
 void rotate_left(rbtree *tree, node_t *node_x);
-void rotate_right(rbtree *tree, node_t *node_y);
 void show_tree(rbtree *tree, node_t *node);
 void rebuild_after_insert(rbtree *tree, node_t *new_node);
 void show_single_node(node_t *node);
@@ -62,44 +61,19 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
     }
 
     rebuild_after_insert(t, new_node);
-    return t -> root;
+    return t->root;
 }
 
 node_t *rbtree_find(const rbtree *t, const key_t key) {
-    node_t *cur_node = t -> root;
-    t -> nil -> key = key;
-
-    while(cur_node -> key != key){
-        cur_node = key > cur_node -> key ? cur_node -> right : cur_node -> left;
-    }
-
-    return cur_node == t -> nil ? NULL : t -> root;
+    return t->root;
 }
 
 node_t *rbtree_min(const rbtree *t) {
-    node_t *cur_node = t -> root;
-
-    while(cur_node -> left != t -> nil){
-        cur_node = cur_node -> left;
-    }
-
-    printf("최소 값: %d\n", cur_node -> key);
-
-    // return cur_node;
-    return t -> root;
+    return t->root;
 }
 
 node_t *rbtree_max(const rbtree *t) {
-    node_t *cur_node = t -> root;
-
-    while(cur_node -> right != t -> nil){
-        cur_node = cur_node -> right;
-    }
-
-    printf("최대 값: %d\n", cur_node -> key);
-
-    // return cur_node;
-    return t -> root;
+    return t->root;
 }
 
 int rbtree_erase(rbtree *t, node_t *p) {
@@ -167,6 +141,7 @@ void rotate_right(rbtree *tree, node_t *node_y){
 
 void rebuild_after_insert(rbtree *tree, node_t *node_z){
     node_t *node_y = tree -> nil;
+    show_single_node(node_z);
 
     while(node_z -> parent -> color == RBTREE_RED){
         if(node_z -> parent == node_z -> parent -> parent -> left){
